@@ -1,0 +1,7 @@
+name: Runner check
+on: workflow_dispatch
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Linux runner works"
