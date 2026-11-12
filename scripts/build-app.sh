@@ -3,8 +3,11 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-swift build -c release
-BIN="$(swift build -c release --show-bin-path)/ClaudeUsageBar"
+# Universal binary: runs on both Apple Silicon and Intel Macs
+ARCHS=(--arch arm64 --arch x86_64)
+swift build -c release "${ARCHS[@]}"
+BIN="$(swift build -c release "${ARCHS[@]}" --show-bin-path)/ClaudeUsageBar"
+VERSION="${VERSION:-1.0}"
 
 APP="build/ClaudeUsageBar.app"
 rm -rf "$APP"
@@ -21,7 +24,7 @@ cat > "$APP/Contents/Info.plist" <<PLIST
     <key>CFBundleIdentifier</key><string>com.stoobysnax.ClaudeUsageBar</string>
     <key>CFBundleExecutable</key><string>ClaudeUsageBar</string>
     <key>CFBundlePackageType</key><string>APPL</string>
-    <key>CFBundleShortVersionString</key><string>1.0</string>
+    <key>CFBundleShortVersionString</key><string>${VERSION}</string>
     <key>CFBundleVersion</key><string>1</string>
     <key>LSMinimumSystemVersion</key><string>13.0</string>
     <key>LSUIElement</key><true/>

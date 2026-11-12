@@ -7,23 +7,32 @@ A tiny macOS menu bar app that shows your Claude plan usage:
 
 The menu bar shows `✳︎ 23% · 41%` (session · week). Click it for progress bars and reset times. It refreshes every 2 minutes.
 
-## Requirements
+## Install
 
-- macOS 13 or later
-- Xcode or the Xcode Command Line Tools (`xcode-select --install`)
+1. Download **ClaudeUsageBar.dmg** from the [latest release](https://github.com/stoobysnax/ClaudeusageBar/releases/latest).
+2. Open it and drag **ClaudeUsageBar** into **Applications**.
+3. Open it from Applications. The app isn't notarized by Apple, so the first launch is blocked:
+   - Go to **System Settings → Privacy & Security**, scroll down, and click **Open Anyway** next to ClaudeUsageBar. Confirm.
+   - (Or in Terminal: `xattr -dr com.apple.quarantine /Applications/ClaudeUsageBar.app`)
+4. When macOS asks whether `security` may read the **Claude Code-credentials** keychain item, click **Always Allow**.
+
+To start it at login, go to System Settings → General → Login Items and add ClaudeUsageBar.
+
+### Requirements
+
+- macOS 13 or later (Apple Silicon or Intel)
 - [Claude Code](https://claude.com/claude-code) installed and logged in with your Claude Pro/Max account (run `claude` once). The app reuses that login; it never asks for your password.
 
-## Build & run
+## Building from source (optional)
+
+Needs the Xcode Command Line Tools (`xcode-select --install`).
 
 ```bash
 ./scripts/build-app.sh
-cp -R build/ClaudeUsageBar.app /Applications/
-open /Applications/ClaudeUsageBar.app
+./scripts/make-dmg.sh
 ```
 
-The first time, macOS asks whether `security` may read the **Claude Code-credentials** keychain item. Click **Always Allow**.
-
-To start it at login, go to System Settings → General → Login Items and add ClaudeUsageBar.
+New installers are built automatically by GitHub Actions whenever a tag like `v1.0.1` is pushed.
 
 ## How it works
 

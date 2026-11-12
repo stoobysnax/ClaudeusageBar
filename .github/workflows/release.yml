@@ -1,0 +1,38 @@
+name: Build installer
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build app
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          [[ "$GITHUB_REF_TYPE" == "tag" ]] || VERSION="0.0.${GITHUB_RUN_NUMBER}"
+          VERSION="$VERSION" ./scripts/build-app.sh
+
+      - name: Build DMG
+        run: ./scripts/make-dmg.sh
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ClaudeUsageBar-dmg
+          path: build/ClaudeUsageBar.dmg
+
+      - name: Publish release
+        if: github.ref_type == 'tag'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" build/ClaudeUsageBar.dmg \
+            --title "Claude Usage Bar $GITHUB_REF_NAME" \
+            --notes "Download **ClaudeUsageBar.dmg**, open it, and drag the app into Applications. See the README for the first-launch steps."
