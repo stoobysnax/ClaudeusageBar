@@ -32,7 +32,7 @@ Needs the Xcode Command Line Tools (`xcode-select --install`).
 ./scripts/make-dmg.sh
 ```
 
-New installers are built automatically by GitHub Actions whenever a tag like `v1.0.1` is pushed.
+New installers are built by GitHub Actions: Actions → Build installer → Run workflow, enter a version.
 
 ## How it works
 
