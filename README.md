@@ -9,6 +9,16 @@ The menu bar shows `✳︎ 23% · 41%` (session · week). Click it for progress 
 
 ## Install
 
+### Quick install (Terminal, one command)
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/stoobysnax/ClaudeusageBar/main/install.sh | bash
+```
+
+It downloads, builds and installs the app into Applications. The first time, macOS may ask to install Apple's free Command Line Tools (not the Xcode app). Click Install, then run the command again. Built locally, the app opens without any security warning.
+
+### Or download the installer
+
 1. Download **ClaudeUsageBar.dmg** from the [latest release](https://github.com/stoobysnax/ClaudeusageBar/releases/latest).
 2. Open it and drag **ClaudeUsageBar** into **Applications**.
 3. Open it from Applications. The app isn't notarized by Apple, so the first launch is blocked:
