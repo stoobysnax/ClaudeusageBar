@@ -17,7 +17,8 @@ curl -fsSL https://github.com/stoobysnax/ClaudeusageBar/archive/refs/heads/main.
 cd "$TMP"/ClaudeusageBar-main
 
 echo "Building (takes a minute)…"
-./scripts/build-app.sh >/dev/null
+./scripts/build-app.sh 2>&1 | grep -iE "error|warning: unable" || true
+[[ -d build/ClaudeUsageBar.app ]] || { echo "Build failed. Copy the text above and send it to Claude."; exit 1; }
 
 pkill -x ClaudeUsageBar 2>/dev/null || true
 rm -rf /Applications/ClaudeUsageBar.app

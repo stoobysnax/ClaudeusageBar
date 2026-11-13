@@ -25,7 +25,7 @@ jobs:
           echo "VERSION=$V" >> "$GITHUB_ENV"
 
       - name: Build app
-        run: ./scripts/build-app.sh
+        run: UNIVERSAL=1 ./scripts/build-app.sh
 
       - name: Build DMG
         run: ./scripts/make-dmg.sh
